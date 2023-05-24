@@ -1,0 +1,44 @@
+--#SET TERMINATOR @
+CREATE PROCEDURE UPDATE_LEADERS_SCORE (
+IN in_School_ID integer, IN in_Leader_Score integer)
+LANGUAGE SQL 
+MODIFIES SQL DATA 
+BEGIN
+		UPDATE CHICAGOPUBLICSCHOOLS 
+		SET Leaders_Score = in_Leader_Score
+		WHERE School_ID = in_School_ID;
+
+	IF in_Leader_Score >= 0 AND in_Leader_Score < 20 THEN
+		UPDATE CHICAGOPUBLICSCHOOLS
+		SET Leaders_Icon = 'Very Weak'
+		WHERE school_id = in_School_ID;
+		
+	ELSEIF in_Leader_Score >= 20 AND in_Leader_Score < 39 THEN
+		UPDATE CHICAGOPUBLICSCHOOLS
+		SET Leaders_Icon = 'Weak'
+		WHERE school_id = in_School_ID;
+		
+	ELSEIF in_Leader_Score >= 40 AND in_Leader_Score < 59 THEN
+		UPDATE CHICAGOPUBLICSCHOOLS
+		SET Leaders_Icon = 'Average'
+		WHERE school_id = in_School_ID;
+		
+	ELSEIF in_Leader_Score >= 60 AND in_Leader_Score < 79 THEN
+		UPDATE CHICAGOPUBLICSCHOOLS
+		SET Leaders_Icon = 'Strong'
+		WHERE school_id = in_School_ID;
+		
+	ELSEIF in_Leader_Score >= 80 AND in_Leader_Score < 99 THEN
+		UPDATE CHICAGOPUBLICSCHOOLS
+		SET Leaders_Icon = 'Very Strong'
+		WHERE school_id = in_School_ID;
+		
+		ROLLBACK;
+	
+		
+	END IF;
+END 
+@
+	
+	
+	
